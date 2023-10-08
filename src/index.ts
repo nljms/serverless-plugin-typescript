@@ -315,6 +315,11 @@ export class TypeScriptPlugin {
         if (error.code === 'EPERM' && error.errno === -4048) {
           return fs.copy(srcPath, dstPath)
         }
+        /* This code returns when the folders/junction already exists */
+        if (error.code === 'EEXIST' && error.errno === -17) {
+            return;
+        }
+
         throw error
       })
   }
